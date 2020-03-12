@@ -1,6 +1,7 @@
-slowf-osharp-admin 是一款基于element-ui + slowf开发的，支持osharp后端的后台框架，对于本框架用到的相关组件/工具请通过以下俩处查看相关文档
-Element-ui: http://element-cn.eleme.io/#/zh-CN/component/installation
-Slowf: https://github.com/zionLZH/slowf-project/wiki
+slowf-osharp-admin 是一款基于element-ui + slowf开发的，支持osharp后端的后台框架，对于本框架用到的相关组件/工具请通过以下俩处查看相关文档    
+
+Element-ui: http://element-cn.eleme.io/#/zh-CN/component/installation   
+Slowf: https://github.com/zionLZH/slowf-project/wiki    
 
 
 ### 1.如何使用
