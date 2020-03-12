@@ -1,0 +1,93 @@
+<template>
+  <slowf-drawer title="权限管理" size="400px" :show="show" @close="$emit('close')">
+    <div v-loading="loading">
+      <el-tree :data="list" :props="{ label: 'Name', children: 'Children' }" node-key="Id" default-expand-all :default-checked-keys="checkes" show-checkbox @check-change="onNodeCheck"></el-tree>
+    </div>
+    <div slot="footer" align="right">
+      <el-button type="primary" @click="doSave">保 存</el-button>
+      <el-button @click="$emit('close')">关 闭</el-button>
+    </div>
+  </slowf-drawer>
+</template>
+
+<script>
+  import * as apiModule from '../../../../../api/Osharp/Module'
+  import * as apiRole from '../../../../../api/Osharp/Role'
+  import slowfDrawer from 'slowf/components/drawer'
+  import dataFormatUtils from 'slowf/utils/dataFormat'
+  export default {
+    props: ['show', 'payload'],
+    components: { slowfDrawer },
+    data () {
+      return {
+        loading: false,
+        list: [],
+        checkes: []
+      }
+    },
+    watch: {
+      payload (val) {
+        this.list = []
+        this.checkes = []
+        if (val && val.Id) {
+          this.getDetail()
+        }
+      }
+    },
+    methods: {
+      async checksCalc (item) {
+        if (item.IsChecked) {
+          this.checkes.push(item.Id)
+        }
+        if (item.Children) {
+          for (let sItem of item.Children) {
+            await this.checksCalc(sItem)
+          }
+        }
+      },
+      onNodeCheck (item, isCheck) {
+        if (isCheck) {
+          this.checkes.push(item.Id)
+        } else {
+          this.checkes.splice(this.checkes.indexOf(item.Id), 1)
+        }
+      },
+      async getDetail () {
+        this.loading = true
+        try {
+          let res = await apiModule.ReadRoleModules(this.payload.Id)
+          if (res.Content && res.Type !== 200) {
+            throw res.Content
+          }
+          this.list = res
+          for (let item of res) {
+            await this.checksCalc(item)
+          }
+        } catch (e) {
+          console.error(e)
+          this.$message.error(typeof e === 'string' ? e : '请求失败')
+        }
+        this.loading = false
+      },
+      async doSave () {
+        this.loading = true
+        try {
+          let res = await apiRole.SetModules({ roleId: this.payload.Id, moduleIds: this.checkes })
+          if (res.Content && res.Type !== 200) {
+            throw res.Content
+          }
+          this.$message.success('保存完成')
+          this.$emit('close')
+        } catch (e) {
+          console.error(e)
+          this.$message.error(typeof e === 'string' ? e : '请求失败')
+        }
+        this.loading = false
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
