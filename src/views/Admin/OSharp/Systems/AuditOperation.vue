@@ -53,7 +53,9 @@ export default {
       let filter = JSON.parse(JSON.stringify(this.filter))
       let submitData = new $O()
       for (let key in filter) {
-        submitData.or($O.data(key, 'like', filter.UserName.value))
+        if (filter.UserName.value) {
+          submitData.or($O.data(key, 'like', filter.UserName.value))
+        }
       }
       this.submitFilter = submitData.getFilterGroup()
       if (!noIndex) {
