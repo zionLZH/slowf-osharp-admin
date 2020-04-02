@@ -30,8 +30,7 @@ import slowfTable from 'slowf/components/table'
 import slowfPager from 'slowf/components/pager'
 import drawerDetail from './drawers/ModuleDetail'
 export default {
-  components: {
-    slowfBlock, slowfTable, slowfPager, drawerDetail },
+  components: { slowfBlock, slowfTable, slowfPager, drawerDetail },
   data () {
     return {
       loading: false,

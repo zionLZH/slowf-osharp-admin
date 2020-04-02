@@ -1,41 +1,34 @@
 <template>
-  <slowf-block v-loading="loading">
+  <list-view v-loading="loading" :table="table.list" :cols="table.cols" :page-index.sync="table.index" :page-total="table.count" @getList="getList">
     <template slot="header">
       <span auto>
         <el-input clearable v-model="filter.Name.value" placeholder="名称/功能方法" @keyup.enter.native="doSearch" @clear="doSearch"></el-input>
       </span>
       <el-button @click="doSearch">搜索</el-button>
     </template>
-    <slowf-table :cols="table.cols" :data="table.list">
-      <template slot-scope="{ data: item }">
-        <el-link type="primary" icon="el-icon-s-tools" @click="showDetail=item" v-rms="'Function.Update'">设置</el-link>
-      </template>
-    </slowf-table>
-    <slowf-pager center v-model="table.index" :total="table.count" @change="getList"></slowf-pager>
+    <template slot="method" slot-scope="{ data: item }">
+      <el-link type="primary" icon="el-icon-s-tools" @click="showDetail=item" v-rms="'Function.Update'">设置</el-link>
+    </template>
     <drawer-detail :show="showDetail" :payload="showDetail" @close="showDetail=false;getList()"></drawer-detail>
-  </slowf-block>
+  </list-view>
 </template>
 
 <script>
 import  * as apiFunction from '../../../../api/Osharp/Function'
-import $O from 'slowf/utils/osharp'
-import slowfBlock from 'slowf/components/block'
-import slowfTable from 'slowf/components/table'
-import slowfPager from 'slowf/components/pager'
-import drawerDetail from './drawers/FunctionDetail'
+import listModel from 'slowf/extend/osharp/list/model'
+import listView from 'slowf/extend/osharp/list/view'
 import cols from './cols/Function'
+import drawerDetail from './drawers/FunctionDetail'
 export default {
-  components: {
-    slowfBlock, slowfTable, slowfPager, drawerDetail },
+  extends: listModel,
+  components: { listView, drawerDetail },
   data () {
     return {
-      loading: false,
-      table: { cols, list: [], index: 1, count: 1 },
+      table: { cols },
       filter: {
-        Name: { key: 'Name', type: 'like', value: '' },
-        Action: { key: 'Action', type: 'like', value: '' },
+        Name: { key: 'Name', type: 'like', value: '', or: true },
+        Action: { key: 'Action', type: 'like', value: '', or: true },
       },
-      submitFilter: false,
       showDetail: false
     }
   },
@@ -49,34 +42,17 @@ export default {
   },
   methods: {
     doSearch (noIndex) {
-      let filter = JSON.parse(JSON.stringify(this.filter))
-      let submitData = new $O()
-      for (let key in filter) {
-        if (filter.Name.value) {
-          submitData.or($O.data(key, 'like', filter.Name.value))
+      this._doSearch(noIndex, {
+        before (map) {
+          for (let key in map) {
+            map[key].value = map.Name.value
+          }
+          return map
         }
-      }
-      this.submitFilter = submitData.getFilterGroup()
-      if (!noIndex) {
-        this.table.index = 1
-      }
-      this.getList()
+      })
     },
     async getList () {
-      this.loading = true
-      try {
-        let submitData = new $O().pageIndex(this.table.index).pageSize(10).setFilterGroup(this.submitFilter).gen()
-        let res = await apiFunction.Read(submitData)
-        if (res.Content && res.Type !== 200) {
-          throw res.Content
-        }
-        this.table.list = res.Rows
-        this.table.count = res.Total
-      } catch (e) {
-        console.error(e)
-        this.$message.error(typeof e === 'string' ? e : '请求失败')
-      }
-      this.loading = false
+      this._getList(apiFunction.Read)
       this.routerPath({
         keyword: this.filter.Name.value,
         index: this.table.index,

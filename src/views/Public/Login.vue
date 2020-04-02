@@ -25,8 +25,8 @@ export default {
     return {
       loading: false,
       form: {
-        account: '',
-        password: ''
+        account: '1951574665@qq.com',
+        password: 'dashen1994'
       },
     }
   },

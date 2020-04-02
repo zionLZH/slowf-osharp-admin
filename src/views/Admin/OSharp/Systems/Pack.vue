@@ -1,23 +1,20 @@
 <template>
-  <slowf-block v-loading="loading">
-    <slowf-table :cols="table.cols" :data="table.list"></slowf-table>
-    <slowf-pager center v-model="table.index" :total="table.count" @change="getList"></slowf-pager>
-  </slowf-block>
+  <list-view v-loading="loading" :table="table.list" :cols="table.cols" :page-index.sync="table.index" :page-total="table.count" @getList="getList">
+  </list-view>
 </template>
 
 <script>
 import  * as apiPack from '../../../../api/Osharp/Pack'
-import $O from 'slowf/utils/osharp'
-import slowfBlock from 'slowf/components/block'
-import slowfTable from 'slowf/components/table'
-import slowfPager from 'slowf/components/pager'
+import listModel from 'slowf/extend/osharp/list/model'
+import listView from 'slowf/extend/osharp/list/view'
 import cols from './cols/Pack'
+
 export default {
-  components: { slowfBlock, slowfTable, slowfPager, },
+  extends: listModel,
+  components: { listView },
   data () {
     return {
-      loading: false,
-      table: { cols, list: [], index: 1, count: 1 }
+      table: { cols }
     }
   },
   mounted () {
@@ -29,20 +26,7 @@ export default {
   },
   methods: {
     async getList () {
-      this.loading = true
-      try {
-        let submitData = new $O().pageIndex(this.table.index).pageSize(10).gen()
-        let res = await apiPack.Read(submitData)
-        if (res.Content && res.Type !== 200) {
-          throw res.Content
-        }
-        this.table.list = res.Rows
-        this.table.count = res.Total
-      } catch (e) {
-        console.error(e)
-        this.$message.error(typeof e === 'string' ? e : '请求失败')
-      }
-      this.loading = false
+      this._getList(apiPack.Read)
       this.routerPath({
         index: this.table.index,
         count: this.table.count

@@ -6609,9 +6609,12 @@ slash@^2.0.0:
   integrity sha1-3lUoUaF1nfOo8gZTVEL17E3eq0Q=
 
 slowf@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/slowf/-/slowf-1.0.1.tgz#e09d822948d8cfec6a40a7f7e12e443f925bf731"
-  integrity sha512-95upRYr3l92wBx2L3JcVBaZthenviySyiTygwwDYxbGcMasSS+dr6PdLBZEQn0n0qmIxzCIxncd47bvbc2Lr6w==
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/slowf/-/slowf-1.0.11.tgz#7eed6bce6e4c2e2124e658eb3c4f99f7086f14c3"
+  integrity sha512-Js3oRUQ1/vlSjM1pcXeM7P53VgyZoCXk9riAFOK/1YeD1cV08V5oyMDVWzIbqcuzYuXynoQx5Xw/saa1NZNgSg==
+  dependencies:
+    axios "^0.19.2"
+    element-ui "^2.13.0"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
