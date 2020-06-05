@@ -34,12 +34,19 @@ export default {
   data () {
     return {
       layoutOption,
-      MenuOption,
+      MenuOption: [],
     }
   },
-  mounted () {
+  async beforeMount () {
+    await this.RefreshMenuOption()
   },
   methods: {
+    async RefreshMenuOption () {
+      let menu = []
+      menu = await import('../router/menu')
+      menu = menu.default
+      this.MenuOption = menu
+    },
     MenuValidCheck (item) {
       if (item.meta && item.meta.hidden) {
         return false

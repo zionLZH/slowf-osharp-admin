@@ -1,7 +1,7 @@
 <template>
   <slowf-drawer title="权限管理" size="400px" :show="show" @close="$emit('close')">
     <div v-loading="loading">
-      <el-tree :data="list" :props="{ label: 'Name', children: 'Children' }" node-key="Id" default-expand-all :default-checked-keys="checkes" show-checkbox @check-change="onNodeCheck"></el-tree>
+      <el-tree ref="tree" :data="list" :props="{ label: 'Name', children: 'Children' }" node-key="Id" :default-checked-keys="checkes" show-checkbox @check-change="onNodeCheck"></el-tree>
     </div>
     <div slot="footer" align="right">
       <el-button type="primary" @click="doSave">保 存</el-button>
@@ -36,21 +36,23 @@
     },
     methods: {
       async checksCalc (item) {
+        let arr = []
         if (item.IsChecked) {
-          this.checkes.push(item.Id)
+          arr.push(item.Id)
         }
         if (item.Children) {
           for (let sItem of item.Children) {
-            await this.checksCalc(sItem)
+            arr = arr.concat(await this.checksCalc(sItem))
           }
         }
+        return arr
       },
       onNodeCheck (item, isCheck) {
-        if (isCheck) {
-          this.checkes.push(item.Id)
-        } else {
-          this.checkes.splice(this.checkes.indexOf(item.Id), 1)
-        }
+        // if (isCheck) {
+        //   this.checkes.push(item.Id)
+        // } else {
+        //   this.checkes.splice(this.checkes.indexOf(item.Id), 1)
+        // }
       },
       async getDetail () {
         this.loading = true
@@ -60,9 +62,11 @@
             throw res.Content
           }
           this.list = res
+          let arr = []
           for (let item of res) {
-            await this.checksCalc(item)
+            arr = arr.concat(await this.checksCalc(item))
           }
+          this.checkes = arr
         } catch (e) {
           console.error(e)
           this.$message.error(typeof e === 'string' ? e : '请求失败')
@@ -72,7 +76,7 @@
       async doSave () {
         this.loading = true
         try {
-          let res = await apiUser.SetModules({ userId: this.payload.Id, moduleIds: this.checkes })
+          let res = await apiUser.SetModules({ userId: this.payload.Id, moduleIds: this.$refs.tree.getCheckedKeys() })
           if (res.Content && res.Type !== 200) {
             throw res.Content
           }
