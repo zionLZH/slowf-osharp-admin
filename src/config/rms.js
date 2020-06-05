@@ -22,24 +22,14 @@ initRMS({
 
 function checkModule (module) {
   if (store.state.ModuleData.length == 0) {
-    return true
+    return false
   }
   if (store.state.ModuleData.indexOf(module) >= 0) {
     return true
   } else {
-    let modulePath = module.split('.')
     for (let item of store.state.ModuleData) {
-      let isPass = true
-      for (let i = 0; i < modulePath.length; i++) {
-        let query = i == modulePath.length - 1 ? `.${modulePath[i]}` : `.${modulePath[i]}.`
-        if (item.indexOf(query) < 0) {
-          isPass = false
-          break
-        }
-      }
-      if (isPass) {
+      if (item.replace(`.${module}`,'!').substr(-1, 1) === '!') {
         return true
-        return
       }
     }
     return false
