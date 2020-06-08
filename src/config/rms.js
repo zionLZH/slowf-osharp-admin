@@ -22,7 +22,7 @@ initRMS({
 
 function checkModule (module) {
   if (store.state.ModuleData.length == 0) {
-    return false
+    return true
   }
   if (store.state.ModuleData.indexOf(module) >= 0) {
     return true

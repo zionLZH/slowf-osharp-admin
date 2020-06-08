@@ -48,6 +48,17 @@ export default {
       this.MenuOption = menu
     },
     MenuValidCheck (item) {
+      if (item.children) {
+        let count = item.children.length
+        for (let sitem of item.children) {
+          if (!this.MenuValidCheck(sitem)) {
+            count--
+          }
+        }
+        if (count === 0) {
+          return false
+        }
+      }
       if (item.meta && item.meta.hidden) {
         return false
       }
@@ -60,7 +71,7 @@ export default {
         return false
       }
       return true
-    }
+    },
   }
 }
 </script>
