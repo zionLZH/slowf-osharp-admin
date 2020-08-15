@@ -1,6 +1,6 @@
 import store from '../store'
 import axios from 'axios'
-import { Alert } from "element-ui"
+import { MessageBox } from "element-ui"
 import { Token } from '../api/Osharp/Identity'
 let isRefreshing = false
 
@@ -24,7 +24,7 @@ axios.interceptors.response.use(res => res, async err => {
       let res = await new axios(config)
       return Promise.resolve(res)
     } catch (e) {
-      await Alert('请重新登录')
+      await MessageBox({message: '请重新登录'})
       store.commit('updateAuthData', false)
       document.body.remove()
       location.reload()
