@@ -2,9 +2,9 @@
   <list-view v-loading="loading" :table="table.list" :cols="table.cols" :page-index.sync="table.index" :page-total="table.count" @getList="getList">
     <template slot="header">
       <span auto>
-        <el-input clearable v-model="filter.Name.value" placeholder="名称/功能方法" @keyup.enter.native="doSearch" @clear="doSearch"></el-input>
+        <el-input clearable v-model="filter.Name.value" placeholder="名称/功能方法" @keyup.enter.native="doSearch()" @clear="doSearch()"></el-input>
       </span>
-      <el-button @click="doSearch">搜索</el-button>
+      <el-button @click="doSearch()">搜索</el-button>
     </template>
     <template slot="method" slot-scope="{ data: item }">
       <el-link type="primary" icon="el-icon-s-tools" @click="showDetail=item" v-rms="'Function.Update'">设置</el-link>

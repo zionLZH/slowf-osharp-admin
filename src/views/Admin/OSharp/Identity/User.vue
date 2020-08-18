@@ -4,9 +4,9 @@
       <el-button v-rms="'User.Create'" icon="el-icon-plus" @click="showDetail = {}">新增</el-button>
       <div split v-rms="'User.Create'"></div>
       <span auto>
-        <el-input clearable v-model="filter.UserName.value" placeholder="用户名/昵称/邮箱/手机号" @keyup.enter.native="doSearch" @clear="doSearch"></el-input>
+        <el-input clearable v-model="filter.UserName.value" placeholder="用户名/昵称/邮箱/手机号" @keyup.enter.native="doSearch()" @clear="doSearch()"></el-input>
       </span>
-      <el-button @click="doSearch">搜索</el-button>
+      <el-button @click="doSearch()">搜索</el-button>
     </template>
     <template slot="method" slot-scope="{ data: item }">
       <el-dropdown @command="tableCMD(item, $event)">

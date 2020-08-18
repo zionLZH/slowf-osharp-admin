@@ -3,9 +3,9 @@
     <template slot="header">
       <el-button v-rms="'Role.Create'" icon="el-icon-plus" @click="showDetail = {}">新增</el-button>
       <span auto>
-      <el-input clearable v-model="filter.Name.value" placeholder="角色名称/备注" @keyup.enter.native="doSearch" @clear="doSearch"></el-input>
+      <el-input clearable v-model="filter.Name.value" placeholder="角色名称/备注" @keyup.enter.native="doSearch()" @clear="doSearch()"></el-input>
       </span>
-      <el-button @click="doSearch">搜索</el-button>
+      <el-button @click="doSearch()">搜索</el-button>
     </template>
     <template slot="method" slot-scope="{ data: item }">
       <el-dropdown @command="tableCMD(item, $event)">
