@@ -53,7 +53,7 @@
         if (val && val.Id) {
           this.form = JSON.parse(JSON.stringify(val))
         } else {
-          this.form = { id: 0, name: '', remark: '', isAdmin: false, isDefault: false, isLocked: false }
+          this.form = { Id: 0, Name: '', Remark: '', IsAdmin: false, IsDefault: false, IsLocked: false }
         }
       }
     },

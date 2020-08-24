@@ -7,6 +7,9 @@
       <slowf-item label="用户名">
         <el-input v-model="form.UserName"></el-input>
       </slowf-item>
+      <slowf-item label="密码">
+        <el-input type="password" v-model="form.Password"></el-input>
+      </slowf-item>
       <slowf-item label="昵称">
         <el-input v-model="form.NickName"></el-input>
       </slowf-item>
@@ -63,7 +66,7 @@
         if (val && val.Id) {
           this.form = JSON.parse(JSON.stringify(val))
         } else {
-          this.form = { id: 0, userName: '', nickName: '', password: '', email: '', emailConfirmed: false, phoneNumber: '', phoneNumberConfirmed: false, lockoutEnabled: false, isLocked: false }
+          this.form = { id: 0, UserName: '', NickName: '', Password: '', Email: '', EmailConfirmed: false, PhoneNumber: '', PhoneNumberConfirmed: false, LockoutEnabled: false, IsLocked: false }
         }
       }
     },
