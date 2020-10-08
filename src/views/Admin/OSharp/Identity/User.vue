@@ -14,7 +14,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="edit" icon="el-icon-edit" v-rms="'User.Update'">编辑</el-dropdown-item>
           <el-dropdown-item command="role" icon="el-icon-user-solid" v-rms="'User.SetRoles'">角色管理</el-dropdown-item>
-          <el-dropdown-item command="modules" icon="el-icon-setting" v-rms="'UserFunction.ReadFunctions'">权限管理</el-dropdown-item>
+          <el-dropdown-item command="modules" icon="el-icon-setting" v-rms="'Module.ReadUserModules'">权限管理</el-dropdown-item>
           <el-dropdown-item command="function" icon="el-icon-s-help" v-rms="'User.Update'">查看功能</el-dropdown-item>
           <el-dropdown-item divided></el-dropdown-item>
           <el-dropdown-item command="delete" icon="el-icon-delete" v-rms="'User.Delete'">删除</el-dropdown-item>
