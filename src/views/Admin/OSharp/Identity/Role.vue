@@ -12,7 +12,7 @@
       <el-link type="primary">操作</el-link>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="edit" icon="el-icon-edit" v-rms="'Role.Create'">编辑</el-dropdown-item>
-        <el-dropdown-item command="modules" icon="el-icon-setting" v-rms="'User.SetModules'">权限管理</el-dropdown-item>
+        <el-dropdown-item command="modules" icon="el-icon-setting" v-rms="'Role.SetModules'">权限管理</el-dropdown-item>
         <el-dropdown-item command="function" icon="el-icon-s-help" v-rms="'RoleFunction.ReadFunctions'">查看功能</el-dropdown-item>
         <el-dropdown-item divided></el-dropdown-item>
         <el-dropdown-item command="delete" icon="el-icon-delete" v-rms="'User.Delete'">删除</el-dropdown-item>
