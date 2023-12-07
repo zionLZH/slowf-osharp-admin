@@ -1,3 +1,9 @@
+### 暂停维护
+
+当前代码暂停维护，请使用最新版本osharp的开发者转向[ZhiMiTec/osharp-vben-admin](https://github.com/ZhiMiTec/osharp-vben-admin),新版依然由我维护，新版同步升级至vben 2.10，拥有更佳的开发体验
+
+### 简介
+
 slowf-osharp-admin 是一款基于element-ui + slowf开发的，支持osharp后端的后台框架，对于本框架用到的相关组件/工具请通过以下俩处查看相关文档    
 
 Element-ui: http://element-cn.eleme.io/#/zh-CN/component/installation   
